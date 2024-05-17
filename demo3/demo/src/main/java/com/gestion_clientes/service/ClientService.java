@@ -17,4 +17,10 @@ public interface ClientService {
     ClientResponse delete(Long id);
 
     ClientResponse update(Long id, ClientRequest clientRequest);
+
+    List<ClientResponse> finByDni(String dni);
+
+    List<ClientResponse> finByFirstNameAndLastName(String firstName, String lastName);
+
+
 }

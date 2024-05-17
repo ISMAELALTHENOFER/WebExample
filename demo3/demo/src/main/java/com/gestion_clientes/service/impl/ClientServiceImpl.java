@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static com.gestion_clientes.constant.Constant.*;
 
@@ -21,7 +22,7 @@ import static com.gestion_clientes.constant.Constant.*;
 @Slf4j
 public class ClientServiceImpl implements ClientService {
     private final ClientRepository repository;
-    protected  static final Logger logger = LoggerFactory.getLogger(ClientServiceImpl.class);
+    protected static final Logger logger = LoggerFactory.getLogger(ClientServiceImpl.class);
 
 
     public ClientServiceImpl(ClientRepository repository) {
@@ -30,15 +31,15 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     @Transactional
-    public ClientResponse save(ClientRequest clientRequest){
-        logger.info(INFO_CREATE_MESSAGE+" {}",clientRequest);
+    public ClientResponse save(ClientRequest clientRequest) {
+        logger.info(INFO_CREATE_MESSAGE + " {}", clientRequest);
         ClientResponse clientResponse;
         try {
             clientResponse = toDto(repository.save(toEntity(clientRequest)));
-            logger.info(INFO_CREATE_SUCCESSFUL_MESSAGE+" {}",clientRequest);
+            logger.info(INFO_CREATE_SUCCESSFUL_MESSAGE + " {}", clientRequest);
             return clientResponse;
-        }catch (Exception exception){
-            logger.error(exception.getMessage(),clientRequest);
+        } catch (Exception exception) {
+            logger.error(exception.getMessage(), clientRequest);
         }
         return null;
     }
@@ -48,7 +49,7 @@ public class ClientServiceImpl implements ClientService {
     public ClientResponse findOne(Long id) {
         Optional<Client> clientOptional = repository.findById(id);
         Client client = clientOptional.orElseThrow(() -> {
-            String message = ENTITY_ERROR_MESSAGE+ id;
+            String message = ENTITY_ERROR_MESSAGE + id;
             return new EntityNotFoundException(message);
         });
 
@@ -71,7 +72,7 @@ public class ClientServiceImpl implements ClientService {
     public ClientResponse delete(Long id) {
         Optional<Client> clientOptional = repository.findById(id);
         Client client = clientOptional.orElseThrow(() -> {
-            String message = ENTITY_ERROR_MESSAGE+ id;
+            String message = ENTITY_ERROR_MESSAGE + id;
             return new EntityNotFoundException(message);
         });
         ClientResponse clientResponse = toDto(client);
@@ -82,20 +83,40 @@ public class ClientServiceImpl implements ClientService {
     @Override
     @Transactional
     public ClientResponse update(Long id, ClientRequest clientRequest) {
-        logger.info(INFO_UPDATE_MESSAGE+" {}",clientRequest);
+        logger.info(INFO_UPDATE_MESSAGE + " {}", clientRequest);
         Client clientUpdate;
         Optional<Client> clientOptional = repository.findById(id);
         Client client = clientOptional.orElseThrow(() -> {
-            String message = ENTITY_ERROR_MESSAGE+ id;
+            String message = ENTITY_ERROR_MESSAGE + id;
             return new EntityNotFoundException(message);
         });
 
         clientUpdate = toEntity(clientRequest);
         clientUpdate.setId(client.getId());
 
-       repository.save(clientUpdate);
+        repository.save(clientUpdate);
         return toDto(clientUpdate);
     }
+
+    @Override
+    public List<ClientResponse> finByDni(String dni) {
+        List<Client> clients = repository.findByDni(dni);
+        List<ClientResponse> clientResponseList = clients.stream()
+                .map(this::toDto)
+                .toList();
+
+        return clientResponseList;
+    }
+
+    @Override
+    public List<ClientResponse> finByFirstNameAndLastName(String firstName, String lastName) {
+        List<Client> clients = repository.findByFirstNameAndLastName(firstName, lastName);
+        List<ClientResponse> clientResponseList = clients.stream()
+                .map(this::toDto)
+                .toList();
+        return clientResponseList;
+    }
+
 
     private ClientResponse toDto(Client client) {
         ClientResponse clientResponse = new ClientResponse();

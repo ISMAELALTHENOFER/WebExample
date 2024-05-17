@@ -21,3 +21,7 @@ n
 >demo/src/main/java/com/gestion_clientes/constant/Constant.java,3\5\35375c2782372c7bb9b480ab936ee8ab3de753e9
 ~
 Ndemo/src/main/java/com/gestion_clientes/exception/EntityNotFoundException.java,2\c\2ca3d4d87675151935e41b8344f5a9fb32925d80
+r
+Bdemo/src/main/java/com/gestion_clientes/dto/ClientNameRequest.java,b\a\ba7000e1cc7fe76f8118e4caa8269bbdcff08e88
+‚
+Rdemo/src/main/java/com/gestion_clientes/dto/ClientFirstNameAndLastNameRequest.java,f\d\fd361ce476b12704fbffe2a2c17c889426f227cb
