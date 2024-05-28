@@ -14,3 +14,7 @@ http://localhost:8080/clients
 {"firstName": "pedro",
 "lastName": "pepe",
 "dni" : "1"}
+
+
+para construir el contenedor 
+" docker-compose up --build -d "
