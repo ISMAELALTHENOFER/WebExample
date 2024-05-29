@@ -40,7 +40,7 @@ public class ClienteController {
 
     @GetMapping("/find")
     public ResponseEntity<List<ClientResponse>> findByFirstNameAndLastName(@RequestBody ClientFirstNameAndLastNameRequest request) {
-        logger.info("Controller buscar por FirstName: {} and lastName:{}",request.getFirstName(),request.getLastName());
+        logger.info("Controller buscar por FirstName: {} and lastName:{}", request.getFirstName(), request.getLastName());
 
         List<ClientResponse> response = service.finByFirstNameAndLastName(request.getFirstName(), request.getLastName());
         return ResponseEntity.ok(response);

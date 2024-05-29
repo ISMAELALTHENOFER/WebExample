@@ -4,15 +4,15 @@ spring:
   datasource:
       driver-class-name: org.h2.Driver
       url: jdbc:h2:mem:gestion_clientes;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-      username: ${LOCAL_DB_USER}
-      password: ${LOCAL_DB_PASSWORD}
+      username: admin
+      password: admin
   h2:
     console:
       enabled: true
       path: /h2-console
       settings:
         trace: false
-        web-allow-others: false
+        web-allow-others: true
   jpa:
     hibernate:
        ddl-auto: update

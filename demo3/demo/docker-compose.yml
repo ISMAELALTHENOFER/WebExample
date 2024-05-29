@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  java-app:
+    build: .
+    container_name: app-java
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./demo-0.0.1-SNAPSHOT.jar:/app/demo-0.0.1-SNAPSHOT.jar
